@@ -33,6 +33,8 @@ class Line(models.Model):
             c = self.read_csv()
 
         convert = {
+            # Convert the headers from the CSV into model-friendly names
+            # for expansion (see self.bandwidth() )
             "Time": "time",
             "Period": "period",
             "Polls Sent": "sent",
@@ -46,7 +48,10 @@ class Line(models.Model):
         }
 
         bwe = []
-        bw = { "line": self }
+        bw = {
+            # Add pointer to this Line
+            "line": self
+        }
 
         for entry in c:
             for key in entry.keys():
@@ -61,14 +66,19 @@ class Line(models.Model):
 
         ret = []
         for entry in bwe:
+            # unpack dict keys as model fields
+            # see self.csv_convert()
             bw = Bandwidth( **entry )
             ret.append( bw.save() )
 
         return ret
 
 class Bandwidth(models.Model):
+    # Bandwidth record for provided line
     line = models.ForeignKey(Line)
 
+    # Fields from AAISP
+    # see Line.csv_convert()
     time = models.DateTimeField()
     period = models.IntegerField()
     sent = models.IntegerField()
