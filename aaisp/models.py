@@ -89,3 +89,18 @@ class Bandwidth(models.Model):
     traffic_rx = models.IntegerField()
     traffic_tx = models.IntegerField()
     score = models.IntegerField()
+
+from django.utils import dateparse, timezone
+### https://stackoverflow.com/a/6462188
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+
+@receiver(pre_save, sender=Bandwidth)
+def aware_datetime(sender, instance, *args, **kwargs):
+    if isinstance(instance.time, str):
+        instance.time = dateparse.parse_datetime(instance.time)
+    if timezone.is_naive(instance.time):
+        # AAISP is a UK based ISP
+        # Provided times are UK
+
+        instance.time = timezone.make_aware(instance.time, timezone=timezone.pytz.timezone("Europe/London"))
