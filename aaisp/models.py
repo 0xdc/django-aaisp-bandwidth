@@ -90,6 +90,9 @@ class Bandwidth(models.Model):
     traffic_tx = models.IntegerField()
     score = models.IntegerField()
 
+    def __str__(self):
+        return "{} {}".format(self.line, self.time)
+
 from django.utils import dateparse, timezone
 ### https://stackoverflow.com/a/6462188
 from django.db.models.signals import pre_save
