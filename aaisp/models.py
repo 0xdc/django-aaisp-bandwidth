@@ -2,6 +2,7 @@ import csv
 import requests
 
 from django.db import models
+from django.db.utils import IntegrityError
 
 class Line(models.Model):
     secret = models.CharField(max_length=16)
@@ -69,9 +70,18 @@ class Line(models.Model):
             # unpack dict keys as model fields
             # see self.csv_convert()
             bw = Bandwidth( **entry )
-            ret.append( bw.save() )
+            ret.append( bw )
 
         return ret
+
+    def save_new(self, bwe=None):
+        if bwe is None:
+            bwe = self.bandwidth()
+        for entry in bwe:
+            try:
+                entry.save()
+            except IntegrityError:
+                pass
 
 class Bandwidth(models.Model):
     # Bandwidth record for provided line
