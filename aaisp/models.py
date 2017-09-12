@@ -48,12 +48,12 @@ class Line(models.Model):
         }
 
         bwe = []
-        bw = {
-            # Add pointer to this Line
-            "line": self
-        }
 
         for entry in c:
+            bw = {
+                # Add pointer to this Line
+                "line": self
+            }
             for key in entry.keys():
                 bw[ convert[key] ] = entry[key]
             bwe.append( bw )
@@ -92,6 +92,10 @@ class Bandwidth(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.line, self.time)
+
+    #.https://docs.djangoproject.com/en/1.11/ref/models/options/#unique-together
+    class Meta:
+        unique_together = ('line', 'time')
 
 from django.utils import dateparse, timezone
 ### https://stackoverflow.com/a/6462188
