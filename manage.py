@@ -23,6 +23,7 @@ settings.configure(
         'django.contrib.auth',
         'aaisp',
     ),
+    USE_TZ=True,
 )
 #endsnippet
 
