@@ -23,9 +23,11 @@ settings.configure(
         'django.contrib.auth',
         'aaisp',
     ),
-    ROOT_URLCONF='aaisp.urls',
 )
 #endsnippet
+
+if os.path.exists(os.path.join(BASE_DIR, "aaisp", "urls.py")):
+    settings.ROOT_URLCONF='aaisp.urls'
 
 if args.action == "test":
     # 'test' action requires the default database configured
