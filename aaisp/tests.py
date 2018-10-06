@@ -26,7 +26,7 @@ class BandwidthTestCases(TestCase):
 
         Bandwidth(**dummy).save()
 
-        with self.assertRaisesMessage(IntegrityError, 'UNIQUE constraint failed: aaisp_bandwidth.line_id, aaisp_bandwidth.time'):
+        with self.assertRaises(IntegrityError):
             Bandwidth(**dummy).save()
 
     def test_csv_import(self):
