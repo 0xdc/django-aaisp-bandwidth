@@ -45,4 +45,4 @@ class BandwidthTestCases(TestCase):
         bwj = self.line.bandwidth(bwe)
         self.line.save_new(bwj)
 
-        self.assertEquals( len(Bandwidth.objects.all()), 4 )
+        self.assertEquals( Bandwidth.objects.count(), 4 )
