@@ -7,16 +7,16 @@ from .models import Bandwidth, Line
 
 class BandwidthTestCases(TestCase):
     def setUp(self):
-        Line(secret="", name="").save()
+        self.line = Line(secret="", name="")
+        self.line.save()
 
     def test_duplicate_times(self):
         """
         The data source contains data for the last 24 hours, so this will be run more often than that.
         Prove that the same data will not be inserted into the database again
         """
-        line = Line.objects.get(id=1)
         dummy = {
-            "line": line,
+            "line": self.line,
             "time": "2017-09-13 07:11:00",
         }
 
@@ -34,8 +34,6 @@ class BandwidthTestCases(TestCase):
         With a copy of real data, test that the model can save data
         """
 
-        line = Line.objects.get(id=1)
-
         c = csv.DictReader("""Time,Period,Polls Sent,%Fail,Latency Min,Av,Max,Traffic (bit/s) Rx,Tx,Score
 2017-09-12 08:00:00,100,100,0,6376000,6807000,7345000,19670,278400,1
 2017-09-12 08:01:40,100,100,0,6412000,6899000,9343000,19190,294300,1
@@ -43,8 +41,8 @@ class BandwidthTestCases(TestCase):
 2017-09-12 08:05:00,100,100,0,6365000,6835000,7341000,1075,25740,1
 """.splitlines())
 
-        bwe = line.csv_convert(c)
-        bwj = line.bandwidth(bwe)
-        line.save_new(bwj)
+        bwe = self.line.csv_convert(c)
+        bwj = self.line.bandwidth(bwe)
+        self.line.save_new(bwj)
 
         self.assertEquals( len(Bandwidth.objects.all()), 4 )
