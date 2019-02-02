@@ -85,7 +85,7 @@ class Line(models.Model):
 
 class Bandwidth(models.Model):
     # Bandwidth record for provided line
-    line = models.ForeignKey(Line)
+    line = models.ForeignKey(Line, on_delete=models.CASCADE)
 
     # Fields from AAISP
     # see Line.csv_convert()
