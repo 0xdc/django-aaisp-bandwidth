@@ -1,5 +1,5 @@
 import csv
-import requests
+from google.appengine.api import urlfetch
 
 from django.db import models
 from django.db.utils import IntegrityError
@@ -20,13 +20,13 @@ class Line(models.Model):
     def request_fmt(self, fmt=None):
         if fmt is None:
             fmt = "csv"
-        response = requests.get( self.get_url(fmt) )
+        response = fetch( self.get_url(fmt, method="GET"))
         return response
 
     def read_csv(self, r=None):
         if r is None:
             r = self.request_fmt(fmt="csv")
-        c = csv.DictReader( r.text.splitlines() )
+        c = csv.DictReader( r.content.splitlines() )
         return c
 
     def csv_convert(self, c=None):
