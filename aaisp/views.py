@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Line
 
-# Create your views here.
+def update_lines(self, request=None):
+    for line in Line.objects.all():
+        line.save_new()
+    return HttpResponse("OK")
