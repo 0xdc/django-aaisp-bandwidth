@@ -41,7 +41,7 @@ class Line(models.Model):
             "Polls Sent": "sent",
             "%Fail": "fail",
             "Latency Min": "latency_min",
-            "Av": "latency_av",
+            "Ave": "latency_av",
             "Max": "latency_max",
             "Traffic (bit/s) Rx": "traffic_rx",
             "Tx": "traffic_tx",
