@@ -34,7 +34,7 @@ class BandwidthTestCases(TestCase):
         With a copy of real data, test that the model can save data
         """
 
-        c = csv.DictReader("""Time,Period,Polls Sent,%Fail,Latency Min,Av,Max,Traffic (bit/s) Rx,Tx,Score
+        c = csv.DictReader("""Time,Period,Polls Sent,%Fail,Latency Min,Ave,Max,Traffic (bit/s) Rx,Tx,Score
 2017-09-12 08:00:00,100,100,0,6376000,6807000,7345000,19670,278400,1
 2017-09-12 08:01:40,100,100,0,6412000,6899000,9343000,19190,294300,1
 2017-09-12 08:03:20,100,100,0,6361000,6873000,7422000,14160,173600,1
